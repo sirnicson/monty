@@ -177,3 +177,23 @@ void nop(stack_t **stack, unsigned int line_number)
     (void)stack;         /* Avoid unused parameter warnings */
     (void)line_number;   /* This does nothing */
 }
+
+/**
+ * sub - Subtracts the top element from the second top element
+ * @stack: Double pointer to the stack
+ * @line_number: Line number of the current operation
+ */
+void sub(stack_t **stack, unsigned int line_number)
+{
+    int difference;
+
+    if (*stack == NULL || (*stack)->next == NULL)
+    {
+        fprintf(stderr, "L%u: can't sub, stack too short\n", line_number);
+        exit(EXIT_FAILURE);
+    }
+
+    difference = (*stack)->next->n - (*stack)->n;
+    pop(stack, line_number);  /* Remove top element */
+    (*stack)->n = difference;
+}
