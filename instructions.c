@@ -154,7 +154,6 @@ void swap(stack_t **stack, unsigned int line_number)
 void add(stack_t **stack, unsigned int line_number)
 {
     stack_t *first_node, *second_node;
-    int sum;
 
     if (*stack == NULL || (*stack)->next == NULL)  /* Check if there are less than 2 elements */
     {
@@ -165,18 +164,12 @@ void add(stack_t **stack, unsigned int line_number)
     first_node = *stack;              /* Get the top node */
     second_node = first_node->next;   /* Get the second node */
 
-    sum = first_node->n + second_node->n;  /* Add the top two values */
-    second_node->n = sum;             /* Store the result in the second node */
+    second_node->n += first_node->n;  /* Add the top two values and store the result in second node */
+    
+    /* Update the stack to point to the new top (second node) */
+    second_node->prev = NULL;
+    *stack = second_node;
 
-    /* Remove the top node from the stack */
-    second_node->prev = NULL;          /* Set the previous pointer for the new top node */
-    *stack = second_node;              /* Update the stack pointer to the new top */
-
-    if (first_node->next != NULL)      /* Update the next pointer of the new top node */
-    {
-        second_node->next = first_node->next;
-        first_node->next->prev = second_node;
-    }
-
-    free(first_node);                  /* Free the memory for the old top node */
+    /* Free the old top (first_node) */
+    free(first_node);
 }
