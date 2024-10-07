@@ -165,3 +165,15 @@ void add(stack_t **stack, unsigned int line_number)
 	/* Free the old top (first_node) */
 	free(first_node);
 }
+
+
+/**
+ * nop - Does nothing
+ * @stack: Double pointer to the stack
+ * @line_number: Line number of the current operation
+ */
+void nop(stack_t **stack, unsigned int line_number)
+{
+    (void)stack;         /* Avoid unused parameter warnings */
+    (void)line_number;   /* This does nothing */
+}
