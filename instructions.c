@@ -199,7 +199,7 @@ void sub(stack_t **stack, unsigned int line_number)
 }
 
 /**
- * div - Divides the second top element by the top element
+ * div_op - Divides the second top element by the top element
  * @stack: Double pointer to the stack
  * @line_number: Line number of the current operation
  */
@@ -222,4 +222,26 @@ void div_op(stack_t **stack, unsigned int line_number)
     quotient = (*stack)->next->n / (*stack)->n;
     pop(stack, line_number);  /* Remove top element */
     (*stack)->n = quotient;
+}
+
+/**
+ * mul - multiplies the second top element of the stack
+ * with the top element
+ *
+ * @stack: double pointer to the stack
+ * @line_number: the line number of the current operation
+ */
+void mul(stack_t **stack, unsigned int line_number)
+{
+    int product;
+
+    if (*stack == NULL || (*stack)->next == NULL)
+    {
+        fprintf(stderr, "L%u: can't mul, stack too short\n", line_number);
+        exit(EXIT_FAILURE);
+    }
+
+    product = (*stack)->next->n * (*stack)->n;  /* Multiply second by first */
+    pop(stack, line_number);  /* Remove the top element */
+    (*stack)->n = product;
 }
