@@ -79,7 +79,6 @@ void pstr(stack_t **stack, unsigned int line_number)
             if (length >= MAX_LENGTH)
             {
                 print_error(line_number, "Maximum length constraint reached");
-                printf("0\n");  /* Print 0 if max length exceeded */
                 return; /* Exit the function */
             }
             printf("%c", value);  /* Print the ASCII character */
