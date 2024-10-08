@@ -43,25 +43,26 @@ void pstr(stack_t **stack, unsigned int line_number)
     stack_t *current = *stack;  /* Pointer to traverse the stack */
     int value;
 
-    /* Show line for pstr operation */
-    printf("Executing pstr at line: %u\n", line_number);
-
+    /* Check is the stack is empty first*/
     if (current == NULL)
     {
-        printf("\n");  /* If the stack is empty, print a new line */
-        return;
+	printf("0\n");  /*  Print new line if stack is empty */
+        return; /* No further execution */
     }
+
+    printf("Executing pstr at line: %u\n", line_number); /* Informational */
 
     /* Traverse the stack and print characters until conditions are met */
     while (current != NULL)
     {
         value = current->n;  /* Get the value at the top of the stack */
 
-        /* Stop if value is 0 or out of ASCII range */
+        /* Stop if value is 0 */
         if (value == 0)
             break;
 
-	if (value > 0 && value <= 127) /* Only print valid ASCII characters */
+	/* Only print valid ASCII characters */
+	if (value > 0 && value <= 127)
 	{
 		printf("%c", value);  /* Print the ASCII character */
 	}
