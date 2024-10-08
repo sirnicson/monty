@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define MAX_LENGTH 100  /* Define the maximum length for the output string */
 
 /**
  * print_error - prints an error message with the line number
@@ -53,6 +54,7 @@ void pstr(stack_t **stack, unsigned int line_number)
 {
     stack_t *current = *stack;  /* Pointer to traverse the stack */
     int value;
+    int length = 0; /* Current length of printed string */
 
     /* Check is the stack is empty first*/
     if (current == NULL)
@@ -73,14 +75,21 @@ void pstr(stack_t **stack, unsigned int line_number)
 	/* Only print valid ASCII characters */
 	if (value > 0 && value <= 127)
 	{
-		printf("%c", value);  /* Print the ASCII character */
-	}
-	else
-	{
-		/* Print the error message when encountering an invalid ASCII value */
-		print_error(line_number, "Invalid ASCII value encountered");
-		return;
-	}
+            /* Check if adding this character exceeds the max length */
+            if (length >= MAX_LENGTH)
+            {
+                print_error(line_number, "Maximum length constraint reached");
+                printf("0\n");  /* Print 0 if max length exceeded */
+                return; /* Exit the function */
+            }
+            printf("%c", value);  /* Print the ASCII character */
+            length++;  /* Increment the length of the output */
+        }
+        else
+        {
+            printf("0\n");  /* Print 0 for invalid ASCII value */
+            return; /* Exit function */
+        }
 
         current = current->next;  /* Move to the next element in the stack */
     }
