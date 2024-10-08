@@ -23,6 +23,7 @@ void execute_opcode(char *opcode, stack_t **stack, unsigned int line_number)
 	{"sub", sub},
 	{"div", div_op},
 	{"mul", mul},
+	{"mod", mod},
         {NULL, NULL}
     };
 
