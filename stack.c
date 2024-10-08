@@ -40,40 +40,30 @@ void pchar(stack_t **stack, unsigned int line_number)
  */
 void pstr(stack_t **stack, unsigned int line_number)
 {
-    stack_t *current = *stack;
-    char str[100]; /* Array to hold characters */
-    int index = 0; /* Index for str array */
-    int i;
+    stack_t *current = *stack;  /* Pointer to traverse the stack */
+    int value;
 
-    
     /* Show line for pstr operation */
     printf("Executing pstr at line: %u\n", line_number);
-    
+
     if (current == NULL)
     {
         printf("\n");  /* If the stack is empty, print a new line */
         return;
     }
 
+    /* Traverse the stack and print characters until conditions are met */
     while (current != NULL)
     {
-        int value = current->n;
-
-	/* Debugging output */
-	printf("Current value: %d\n", value);
+        value = current->n;  /* Get the value at the top of the stack */
 
         /* Stop if value is 0 or out of ASCII range */
         if (value == 0 || value < 0 || value > 127)
             break;
 
-        str[index++] = value; /** Store the characters in the array */
+        printf("%c", value);  /* Print the ASCII character */
         current = current->next;  /* Move to the next element in the stack */
     }
 
-    /* Print the sring in correct order*/
-    for (i = 0; i < index; i++)
-    {
-	    printf("%c", str[i]);
-    }
     printf("\n");  /* Print a new line at the end */
 }
