@@ -58,10 +58,14 @@ void pstr(stack_t **stack, unsigned int line_number)
         value = current->n;  /* Get the value at the top of the stack */
 
         /* Stop if value is 0 or out of ASCII range */
-        if (value == 0 || value < 0 || value > 127)
+        if (value == 0)
             break;
 
-        printf("%c", value);  /* Print the ASCII character */
+	if (value > 0 && value <= 127) /* Only print valid ASCII characters */
+	{
+		printf("%c", value);  /* Print the ASCII character */
+	}
+
         current = current->next;  /* Move to the next element in the stack */
     }
 

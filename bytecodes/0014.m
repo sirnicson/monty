@@ -1,15 +1,16 @@
-# LIFO - last element pushed is the first one out
-
-push 115 # s <-- first in & last out
-push 105 # i
+push 1 # first in last out
+push 2
+push 3
+push 4
 push 0
-push 115 # s
-push 97  # a
-push 108 # l
-push 111 # o
-push 104 # h
-push 99  # c
-push 105 # i
-push 78  # N <-- last in & first out
-pstr     # This should stop at 0 and print "Nicholas"
+push 110
+push 0
+push 108
+push 111
+push 111
+push 104
+push 99
+push 83 # last in first out
+pstr
 
+# This should print school
