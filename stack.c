@@ -2,6 +2,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+/**
+ * print_error - prints an error message with the line number
+ * @line_number: current line number in the Monty file
+ * @message: error message to display
+ */
+void print_error(unsigned int line_number, const char *message)
+{
+    printf("Error at line %u: %s\n", line_number, message);
+}
+
 /**
  * pchar - prints the char at the top of the stack
  * @stack: double pointer to the top of the stack
@@ -46,11 +57,9 @@ void pstr(stack_t **stack, unsigned int line_number)
     /* Check is the stack is empty first*/
     if (current == NULL)
     {
-	printf("0\n");  /*  Print new line if stack is empty */
+	printf("\n");  /*  Print new line if stack is empty */
         return; /* No further execution */
     }
-
-    printf("Executing pstr at line: %u\n", line_number); /* Informational */
 
     /* Traverse the stack and print characters until conditions are met */
     while (current != NULL)
@@ -65,6 +74,12 @@ void pstr(stack_t **stack, unsigned int line_number)
 	if (value > 0 && value <= 127)
 	{
 		printf("%c", value);  /* Print the ASCII character */
+	}
+	else
+	{
+		/* Print the error message when encountering an invalid ASCII value */
+		print_error(line_number, "Invalid ASCII value encountered");
+		return;
 	}
 
         current = current->next;  /* Move to the next element in the stack */
