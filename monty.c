@@ -28,6 +28,11 @@ void execute_opcode(char *opcode, stack_t **stack, unsigned int line_number)
     };
 
     int i;
+
+    /* Handle comments and ignore empty lines */
+    if (opcode == NULL || opcode[0] == '#')
+	    return;
+
     for (i = 0; instructions[i].opcode != NULL; i++)
     {
         if (strcmp(opcode, instructions[i].opcode) == 0)
