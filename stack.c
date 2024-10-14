@@ -95,3 +95,36 @@ void pstr(stack_t **stack, unsigned int line_number)
 
     printf("\n");  /* Print a new line at the end */
 }
+
+
+/**
+ * rotl - rotates the stack to the top
+ * @stack: double pointer to the top of the stack
+ * @line_number: current line number in the Monty file (unused)
+ *
+ * Description: The top element becomes the last one, and the second top
+ * element becomes the first one. rotl never fails.
+ * Return: void
+ */
+void rotl(stack_t **stack, unsigned int line_number)
+{
+    stack_t *first, *last;
+    (void)line_number;      /* Ignore unused parameter */
+
+    if (*stack == NULL || (*stack)->next == NULL)
+        return;  /* No need to rotate if the stack is empty or has one element */
+
+    first = *stack;
+    last = *stack;
+
+    /* Traverse to the last node of the stack */
+    while (last->next != NULL)
+        last = last->next;
+
+    *stack = first->next;  /* The second element becomes the new top */
+    (*stack)->prev = NULL; /* Set the new top's previous to NULL */
+
+    first->next = NULL;    /* The former top element's next is NULL */
+    last->next = first;    /* Attach the old top to the end of the stack */
+    first->prev = last;    /* Set the previous pointer of the old top to the last element */
+}
