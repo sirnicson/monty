@@ -53,15 +53,16 @@ void pchar(stack_t **stack, unsigned int line_number)
 void pstr(stack_t **stack, unsigned int line_number)
 {
     stack_t *current = *stack;  /* Pointer to traverse the stack */
-    (void)line_number;      /* Ignore unused parameter */
     int value;
     int length = 0; /* Current length of printed string */
 
-    /* Check is the stack is empty first*/
+    (void)line_number;  /* Ignore unused parameter */
+
+    /* Check if the stack is empty */
     if (current == NULL)
     {
-	printf("\n");  /*  Print new line if stack is empty */
-        return; /* No further execution */
+        printf("\n");  /* Print new line if stack is empty */
+        return;  /* No further execution */
     }
 
     /* Traverse the stack and print characters until conditions are met */
@@ -73,14 +74,13 @@ void pstr(stack_t **stack, unsigned int line_number)
         if (value == 0)
             break;
 
-	/* Only print valid ASCII characters */
-	if (value > 0 && value <= 127)
-	{
+        /* Only print valid ASCII characters */
+        if (value > 0 && value <= 127)
+        {
             /* Check if adding this character exceeds the max length */
             if (length >= MAX_LENGTH)
             {
-               /*  print_error(line_number, "Maximum length constraint reached"); ignored */
-                return; /* Exit the function */
+                return;  /* Exit the function if length exceeds */
             }
             printf("%c", value);  /* Print the ASCII character */
             length++;  /* Increment the length of the output */
@@ -88,7 +88,7 @@ void pstr(stack_t **stack, unsigned int line_number)
         else
         {
             printf("0\n");  /* Print 0 for invalid ASCII value */
-            return; /* Exit function */
+            return;  /* Exit function */
         }
 
         current = current->next;  /* Move to the next element in the stack */
