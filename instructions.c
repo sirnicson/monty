@@ -1,5 +1,7 @@
 #include "monty.h"
 
+int mode = 0; /* 0 for stack, 1 for queue */
+
 /**
  * push - pushes an element onto the stack
  * @stack: double pointer to the top of the stack
@@ -33,15 +35,41 @@ void push(stack_t **stack, unsigned int line_number)
 	}
 
 	new_node->n = value;
-	new_node->prev = NULL;
-	new_node->next = *stack;
 
-	/* If the stack is not empty, update the previous pointer of the current top */
-	if (*stack)
-		(*stack)->prev = new_node;
+	if (mode == 0) /* Stack mode (LIFO) */
+	{
+		new_node->prev = NULL;
+		new_node->next = *stack;
 
-	/* Update the stack pointer */
-	*stack = new_node;
+		/* If the stack is not empty, update the previous pointer of the current top */
+		if (*stack)
+			(*stack)->prev = new_node;
+
+		/* Update the stack pointer */
+		*stack = new_node;
+
+	}
+
+	else /* Queue mode (FIFO) */
+	{
+		new_node->next = NULL; /* New node will be the last in the queue */
+
+		if (*stack == NULL) /* If stack is empty */
+		{
+			new_node->prev = NULL; /* New node is the only element */
+			*stack = new_node; /* Update stack pointer to new node */
+		}
+		else
+		{
+			stack_t *temp = *stack;
+			while (temp->next != NULL) /* Traverse to the end of the queue */
+			{
+				temp = temp->next; /* Move to the last node */
+			}
+			temp->next = new_node; /* Set the last node's next to new node */
+			new_node->prev = temp; /* Set new node's previous to last node */
+		}
+	}
 }
 
 /**
@@ -54,16 +82,27 @@ void push(stack_t **stack, unsigned int line_number)
  */
 void pall(stack_t **stack, unsigned int line_number)
 {
-	stack_t *current = *stack;
+    stack_t *current = *stack;
 
-	(void)line_number;  /* To suppress unused parameter warning */
+    (void)line_number;  /* To suppress unused parameter warning */
 
-	/* Print all values from the stack */
-	while (current)
+    if (mode == 0)  /* Stack mode (LIFO) */
+    {
+        /* Print values in LIFO order */
+        while (current)
+        {
+            printf("%d\n", current->n);
+            current = current->next; /* Move down the stack */
+        }
+    }
+    else if (mode == 1)  /* Queue mode (FIFO) */
+    {
+        while (current)
 	{
-		printf("%d\n", current->n);
-		current = current->next;
-	}
+            printf("%d\n", current->n);
+            current = current->next; /* Move to the next node */
+        }
+    }
 }
 
 /**
@@ -271,4 +310,29 @@ void mod(stack_t **stack, unsigned int line_number)
     remainder = (*stack)->next->n % (*stack)->n;
     pop(stack, line_number);  /* Remove top element */
     (*stack)->n = remainder;
+}
+
+
+/**
+ * stack - Sets the data structure to stack (LIFO)
+ * @stack: double pointer to the top of the stack
+ * @line_number: current line number in the script
+ */
+void stack_mode(stack_t **stack, unsigned int line_number)
+{
+    (void)stack; /* Suppress unused parameter warning */
+    (void)line_number; /* Suppress unused parameter warning */
+    mode = 0; /* Set mode to stack (LIFO) */
+}
+
+/**
+ * queue - Sets the data structure to queue (FIFO)
+ * @stack: double pointer to the top of the stack
+ * @line_number: current line number in the script
+ */
+void queue_mode(stack_t **stack, unsigned int line_number)
+{
+    (void)stack; /* Suppress unused parameter warning */
+    (void)line_number; /* Suppress unused parameter warning */
+    mode = 1; /* Set mode to queue (FIFO) */
 }
