@@ -54,7 +54,6 @@ void pstr(stack_t **stack, unsigned int line_number)
 {
     stack_t *current = *stack;  /* Pointer to traverse the stack */
     int value;
-    int length = 0; /* Current length of printed string */
 
     (void)line_number;  /* Ignore unused parameter */
 
@@ -70,26 +69,11 @@ void pstr(stack_t **stack, unsigned int line_number)
     {
         value = current->n;  /* Get the value at the top of the stack */
 
-        /* Stop if value is 0 */
-        if (value == 0)
+        /* Stop if value is 0 or outside the printable ASCII range */
+        if (value <= 0 || value > 127)
             break;
 
-        /* Only print valid ASCII characters */
-        if (value > 0 && value <= 127)
-        {
-            /* Check if adding this character exceeds the max length */
-            if (length >= MAX_LENGTH)
-            {
-                return;  /* Exit the function if length exceeds */
-            }
-            printf("%c", value);  /* Print the ASCII character */
-            length++;  /* Increment the length of the output */
-        }
-        else
-        {
-            printf("0\n");  /* Print 0 for invalid ASCII value */
-            return;  /* Exit function */
-        }
+        printf("%c", value);  /* Print the ASCII character */
 
         current = current->next;  /* Move to the next element in the stack */
     }
