@@ -53,6 +53,7 @@ void pchar(stack_t **stack, unsigned int line_number)
 void pstr(stack_t **stack, unsigned int line_number)
 {
     stack_t *current = *stack;  /* Pointer to traverse the stack */
+    (void)line_number;      /* Ignore unused parameter */
     int value;
     int length = 0; /* Current length of printed string */
 
@@ -78,7 +79,7 @@ void pstr(stack_t **stack, unsigned int line_number)
             /* Check if adding this character exceeds the max length */
             if (length >= MAX_LENGTH)
             {
-                print_error(line_number, "Maximum length constraint reached");
+               /*  print_error(line_number, "Maximum length constraint reached"); ignored */
                 return; /* Exit the function */
             }
             printf("%c", value);  /* Print the ASCII character */
